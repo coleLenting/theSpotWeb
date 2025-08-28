@@ -1,11 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 /* Global Styles */
 body {
-    background-color: #F4F4F4;
-    color: #333;
+    background-color: #222;
+    color: #fff;
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
+}
+
+html {
+  background-color: #222;
 }
 
 /* Hero Section */
