@@ -1,9 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
 /* Global Styles */
+@font-face {
+  font-family: 'Bauhaus 93';
+  src:  url('./assets/fonts/Bauhaus\ 93\ Regular.ttf') format('woff'),
+        url('./assets/fonts/BAUHS93.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  src: url('./assets/fonts/BricolageGrotesque-Regular.ttf'),
+       url('./assets/fonts/BricolageGrotesque-Bold.ttf');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-bauhaus {
+  font-family: 'Bauhaus 93', fantasy !important;
+}
+
+.brand-styling {
+  font-size: 1.6rem;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3); /* Optional: adds depth */
+}
+
+.font-bricolage {
+  font-family: 'Bricolage Grotesque', sans-serif !important;
+}
+
 body {
     background-color: #222;
     color: #fff;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Bricolage Grotesque';
     margin: 0;
     padding: 0;
 }
