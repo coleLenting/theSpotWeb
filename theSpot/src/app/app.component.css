@@ -1,0 +1,28 @@
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: linear-gradient(45deg, #3A015C, #40E0D0);
+  color: #000000;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.cart-icon {
+  position: relative;
+}
+
+.nav-link.btn {
+  color: #ffffff !important;
+  padding: 0.5rem 1rem;
+}
+
+.nav-link.btn:hover {
+  color: #40E0D0 !important;
+}

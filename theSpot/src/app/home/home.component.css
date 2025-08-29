@@ -1,0 +1,235 @@
+.home-container {
+  background-color: #000000;
+  min-height: 100vh;
+}
+
+.hero-section {
+  background: linear-gradient(135deg, #000000 0%, #3A015C 100%);
+  padding: 80px 0;
+  color: #ffffff;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  color: #40E0D0;
+  margin-bottom: 20px;
+  text-shadow: 0 0 20px rgba(64, 224, 208, 0.5);
+}
+
+.hero-subtitle {
+  font-size: 1.3rem;
+  margin-bottom: 40px;
+  opacity: 0.9;
+}
+
+.search-container {
+  display: flex;
+  max-width: 500px;
+  margin-bottom: 30px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 15px 20px;
+  border: 2px solid #3A015C;
+  border-radius: 10px 0 0 10px;
+  background: rgba(58, 1, 92, 0.2);
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #40E0D0;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.search-btn {
+  padding: 15px 20px;
+  background: linear-gradient(45deg, #3A015C, #40E0D0);
+  border: none;
+  border-radius: 0 10px 10px 0;
+  color: #000000;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+  transform: scale(1.05);
+}
+
+.hero-image {
+  text-align: center;
+}
+
+.hero-image img {
+  max-width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(64, 224, 208, 0.2);
+  border: 2px solid rgba(64, 224, 208, 0.3);
+}
+
+.featured-section {
+  padding: 80px 0;
+  background-color: #000000;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  color: #40E0D0;
+  text-align: center;
+  margin-bottom: 50px;
+  text-shadow: 0 0 15px rgba(64, 224, 208, 0.3);
+}
+
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.movie-card {
+  background: rgba(58, 1, 92, 0.1);
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(64, 224, 208, 0.2);
+}
+
+.movie-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(64, 224, 208, 0.3);
+  border-color: #40E0D0;
+}
+
+.movie-poster {
+  position: relative;
+  height: 350px;
+  overflow: hidden;
+}
+
+.movie-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.movie-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.movie-card:hover .movie-overlay {
+  opacity: 1;
+}
+
+.movie-card:hover .movie-poster img {
+  transform: scale(1.1);
+}
+
+.overlay-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #3A015C, #40E0D0);
+  border: none;
+  color: #000000;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.overlay-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 5px 15px rgba(64, 224, 208, 0.5);
+}
+
+.movie-info {
+  padding: 20px;
+  color: #ffffff;
+}
+
+.movie-title {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #40E0D0;
+}
+
+.movie-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.movie-rating {
+  color: #40E0D0;
+}
+
+.movie-price {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #40E0D0;
+  margin: 0;
+}
+
+.view-all-container {
+  text-align: center;
+}
+
+.btn-view-all {
+  background: linear-gradient(45deg, #3A015C, #40E0D0);
+  color: #000000;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.btn-view-all:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(64, 224, 208, 0.4);
+}
+
+@media (max-width: 768px) {
+  .landing-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .movies-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .search-container {
+    max-width: 100%;
+  }
+}

@@ -9,14 +9,15 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: '/landing', pathMatch: 'full' },
   { path: 'landing', component: LandingPageComponent },
+  { path: 'authentication', component: AuthenticationComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'items', component: ItemListComponent },
   { path: 'cart', component: CartComponent },
   { path: 'admin', component: AdminPanelComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'authentication', component: AuthenticationComponent },
-  { path: '**', redirectTo: 'home', pathMatch: 'full' }
+  { path: '**', redirectTo: '/landing' }
 ];
 
 @NgModule({

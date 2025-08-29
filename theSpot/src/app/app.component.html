@@ -1,47 +1,48 @@
-<nav class="sticky-top navbar navbar-expand-lg bg-dark navbar-blur navbar-light shadow-sm">
-    <div class="container">
-      <!-- Brand title -->
-      <a class="navbar-brand fw-bold text-light font-bauhaus brand-styling" href="/home">The Spot</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse w-100" id="navbarNav">
-        <!-- Center the nav items -->
-        <ul class="navbar-nav mx-auto w-100 d-flex justify-content-center font-bricolage"> 
-          <li class="nav-item">
-            <a class="nav-link text-light" routerLink="/home">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-light" routerLink="/items">Shop</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-light" routerLink="/admin">Admin</a>
-          </li>
-          
-            <!--TEST ROUTES FOR LOGIN & LANDING-->
-          <li class="nav-item">
-            <a class="nav-link text-light" routerLink="/authentication">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-light" routerLink="/landing">Landing</a>
-            
-            <!--Profile & Cart on right side-->>
-            </ul>
-            <ul class="navbar-nav ms-auto">
-              <li class="nav-item">
-                <a class="nav-link text-light cart-icon" routerLink="/cart" routerLinkActive="active">
-                  <i class = "fas fa-cart-shopping"></i>
-                </a>
-              </li>
-              <li class="nav-item">
-              <a class="nav-link text-light cart-icon" routerLink="/profile" routerLinkActive="active">
-                <i class="fas fa-user"></i>
-              </a>
-            </li>
-            
-        </ul>
-        
-      </div>
+<nav class="sticky-top navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <!-- Brand title -->
+    <a class="navbar-brand fw-bold font-bauhaus" routerLink="/home">The Spot</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse w-100" id="navbarNav">
+      <!-- Center the nav items -->
+      <ul class="navbar-nav mx-auto w-100 d-flex justify-content-center font-bricolage"> 
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/items" routerLinkActive="active">Movies</a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin()">
+          <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
+        </li>
+        <li class="nav-item" *ngIf="!isLoggedIn()">
+          <a class="nav-link" routerLink="/authentication" routerLinkActive="active">Login</a>
+        </li>
+      </ul>
+      
+      <!-- Profile & Cart on right side -->
+      <ul class="navbar-nav ms-auto" *ngIf="isLoggedIn()">
+        <li class="nav-item">
+          <a class="nav-link cart-icon" routerLink="/cart" routerLinkActive="active">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/profile" routerLinkActive="active">
+            <i class="fas fa-user"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link btn btn-link" (click)="logout()" style="border: none; background: none;">
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
+        </li>
+      </ul>
     </div>
-  </nav>
-    <router-outlet></router-outlet>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
