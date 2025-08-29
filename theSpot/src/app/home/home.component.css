@@ -7,6 +7,7 @@
   background: linear-gradient(135deg, #000000 0%, #3A015C 100%);
   padding: 80px 0;
   color: #ffffff;
+  height: 100vh;
 }
 
 .hero-title {
@@ -76,7 +77,7 @@
 
 .featured-section {
   padding: 80px 0;
-  background-color: #000000;
+  background: #000000;
 }
 
 .section-title {
