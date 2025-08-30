@@ -1,6 +1,6 @@
 .auth-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #000000 0%, #3A015C 50%, #40E0D0 100%);
+  background: #010101;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,11 +10,11 @@
 .auth-card {
   background: rgba(0, 0, 0, 0.9);
   border-radius: 20px;
-  padding: 40px;
+  padding: 50px 100px;
   width: 100%;
-  max-width: 450px;
-  box-shadow: 0 20px 40px rgba(64, 224, 208, 0.2);
-  border: 1px solid rgba(64, 224, 208, 0.3);
+  max-width: 600px;
+  box-shadow: 20px 20px 0px rgba(64, 224, 208, 0.2);
+  border: 2px solid rgba(64, 224, 208, 0.3);
 }
 
 .auth-header {
@@ -60,7 +60,7 @@
 
 .tab-btn.active {
   background: #3A015C;
-  color: #40E0D0;
+  color: #ffffff;
 }
 
 .auth-form {
@@ -68,12 +68,12 @@
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .form-label {
   display: block;
-  color: #40E0D0;
+  color: #ffffff;
   margin-bottom: 8px;
   font-weight: 500;
 }
@@ -109,7 +109,7 @@
 .auth-btn {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(45deg, #3A015C, #40E0D0);
+  background: #40E0D0;
   color: #000000;
   border: none;
   border-radius: 8px;

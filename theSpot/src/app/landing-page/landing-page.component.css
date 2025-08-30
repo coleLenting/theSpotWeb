@@ -10,7 +10,7 @@
 
 .landing-content {
   flex: 1;
-  max-width: 600px;
+  max-width: 60%;
   z-index: 2;
 }
 
@@ -19,7 +19,7 @@
 }
 
 .landing-title {
-  font-size: 4rem;
+  font-size: 3rem;
   color: #40E0D0;
   margin-bottom: 20px;
   text-shadow: 0 0 30px rgba(64, 224, 208, 0.6);
@@ -32,14 +32,14 @@
 }
 
 .landing-slogan {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   color: #ffffff;
   margin-bottom: 20px;
   font-weight: 600;
 }
 
 .landing-description {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 40px;
   line-height: 1.6;
@@ -55,7 +55,7 @@
   padding: 14px 30px;
   border: none;
   border-radius: 8px;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -87,11 +87,20 @@
 
 .landing-visual {
   flex: 1;
-  position: relative;
-  height: 500px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  width: 40%;
+ 
+}
+
+.landing-visual img{
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+  -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+                
 }
 
 .floating-elements {
