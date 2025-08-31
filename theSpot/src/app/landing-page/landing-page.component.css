@@ -64,13 +64,19 @@
 }
 
 .btn-primary {
-  background: linear-gradient(45deg, #40E0D0, #3A015C);
-  color: #000000;
+  background: #40E0D0 !important;
+  color: #fff;
+  transition: all 0.3s ease;
+  
 }
 
 .btn-primary:hover {
+  background: transparent !important;
+  color: #40E0D0 !important;
+  border: 2px solid #40E0D0;
   transform: translateY(-3px);
-  box-shadow: 0 15px 30px rgba(64, 224, 208, 0.4);
+  box-shadow: 10px 10px 0px #10001B !important;
+  transition: all 0.3s ease;
 }
 
 .btn-secondary {
