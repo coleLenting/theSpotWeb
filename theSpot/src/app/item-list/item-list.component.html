@@ -1,1 +1,36 @@
-<p>item-list works!</p>
+  <!-- Featured Movies Section -->
+  <section class="featured-section">
+    <div class="container">
+      <div class="movies-grid">
+        <div class="movie-card" *ngFor="let movie of featuredMovies">
+          <div class="movie-poster">
+            <img [src]="movie.poster" [alt]="movie.title">
+            <div class="movie-overlay">
+              <button class="overlay-btn" (click)="viewMovie(movie.id)">
+                <i class="fas fa-play"></i>
+              </button>
+              <button class="overlay-btn" (click)="addToCart(movie)">
+                <i class="fas fa-cart-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="movie-info">
+            <h3 class="movie-title font-bricolage">{{ movie.title }}</h3>
+            <div class="movie-meta font-bricolage">
+              <span class="movie-year">{{ movie.year }}</span>
+              <span class="movie-rating">
+                <i class="fas fa-star"></i> {{ movie.rating }}
+              </span>
+            </div>
+            <p class="movie-price font-bricolage">${{ movie.price }}</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="view-all-container">
+        <button routerLink="/items" class="btn-view-all font-bricolage">
+          View All Movies <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </section>

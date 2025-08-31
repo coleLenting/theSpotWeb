@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MovieService, Movie } from '../services/movie.service';
 
 @Component({
   selector: 'app-item-list',
@@ -7,5 +9,30 @@ import { Component } from '@angular/core';
   styleUrl: './item-list.component.css'
 })
 export class ItemListComponent {
+featuredMovies: Movie[] = [];
+  searchTerm = '';
 
+  constructor(
+    private movieService: MovieService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.featuredMovies = this.movieService.getFeaturedMovies();
+  }
+
+  onSearch(): void {
+    if (this.searchTerm.trim()) {
+      this.router.navigate(['/items'], { queryParams: { search: this.searchTerm } });
+    }
+  }
+
+  viewMovie(id: number): void {
+    this.router.navigate(['/movie', id]);
+  }
+
+  addToCart(movie: Movie): void {
+    this.movieService.addToCart(movie);
+  }
 }
+
