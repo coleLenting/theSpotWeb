@@ -1,6 +1,7 @@
 .home-container {
   background-color: #000000;
   min-height: 100vh;
+ 
 }
 
 .hero-section {
@@ -32,7 +33,7 @@
 .search-input {
   flex: 1;
   padding: 15px 20px;
-  border: 2px solid #3A015C;
+  border: 2px solid #2E1A78;
   border-radius: 10px 0 0 10px;
   background: rgba(58, 1, 92, 0.2);
   color: #ffffff;
@@ -50,7 +51,7 @@
 
 .search-btn {
   padding: 15px 20px;
-  background: linear-gradient(45deg, #3A015C, #40E0D0);
+  background: linear-gradient(45deg, #2E1A78, #40E0D0);
   border: none;
   border-radius: 0 10px 10px 0;
   color: #000000;
@@ -78,6 +79,7 @@
 .featured-section {
   padding: 80px 0;
   background: #000000;
+  position: relative;
 }
 
 .section-title {
@@ -149,7 +151,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: linear-gradient(45deg, #3A015C, #40E0D0);
+  background: linear-gradient(45deg, #2E1A78, #40E0D0);
   border: none;
   color: #000000;
   font-size: 1.2rem;
@@ -198,7 +200,7 @@
 }
 
 .btn-view-all {
-  background: linear-gradient(45deg, #3A015C, #40E0D0);
+  background: linear-gradient(45deg, #2E1A78, #40E0D0);
   color: #000000;
   padding: 15px 30px;
   border: none;

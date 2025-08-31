@@ -1,0 +1,13 @@
+<div class="poster-carousel-container position-fixed">
+  <div class="carousel-wrapper h-100">
+    <div 
+      class="poster-slide" 
+      *ngFor="let movie of movies; let i = index"
+      [class.active]="i === currentIndex"
+      [style.background-image]="'url(' + movie.poster + ')'"
+    >
+      <div class="poster-overlay"></div>
+    </div>
+  </div>
+  <div class="fade-mask"></div>
+</div>

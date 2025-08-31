@@ -14,6 +14,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
+import { MoviePosterCarouselComponent } from './movie-poster-carousel/movie-poster-carousel.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,9 @@ import { AuthenticationComponent } from './authentication/authentication.compone
     AdminPanelComponent,
     ProfileComponent,
     LandingPageComponent,
-    AuthenticationComponent
+    AuthenticationComponent,
+    MoviePosterCarouselComponent
+    
   ],
   imports: [
     BrowserModule,

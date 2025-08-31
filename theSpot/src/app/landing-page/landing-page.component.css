@@ -1,5 +1,5 @@
 .landing-container {
-  min-height: 100vh;
+  min-height: 92.5vh;
   background: linear-gradient(135deg, #000000 0%, #2E1A78 100%);
   display: flex;
   align-items: center;
@@ -104,8 +104,7 @@
   height: 100%;
   width: auto;
   object-fit: cover;
-  -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
-  mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+  
                 
 }
 
@@ -197,3 +196,4 @@
     justify-content: center;
   }
 }
+

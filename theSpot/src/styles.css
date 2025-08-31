@@ -53,6 +53,21 @@ html, body {
   -webkit-backdrop-filter: blur(20px) saturate(120%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* soft divider */
   transition: all 0.3s ease;
+  height: 10vh;
+}
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    height: 10vh;
+  }
+
+  .navbar-brand {
+    font-size: 1.5rem;
+  }
+
+  .navbar-nav .nav-link {
+    padding: 0.4rem 0.8rem;
+  }
 }
 
 /* Brand */
