@@ -31,71 +31,104 @@
   box-sizing: border-box;
 }
 
-body {
-  background-color: #000000;
-  color: #ffffff;
-  font-family: 'Bricolage Grotesque', sans-serif;
-  margin: 0;
-  padding: 0;
-  line-height: 1.6;
+
+app-root {
+  display: block;
+  height: 100%;
+  background: linear-gradient(135deg, #000000 0%, #3A015C 100%);
 }
 
-html {
-  background-color: #000000;
-  scroll-behavior: smooth;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #0d0d0d; 
+  color: #ffffff; 
 }
 
 /* Navbar Styling */
 .navbar {
-  background: linear-gradient(135deg, #000000 0%, #3b015c 50%, #000000 100%) !important;
-  backdrop-filter: blur(50px);
+  background: rgba(0, 0, 0, 0.6); /* subtle transparency */
+  backdrop-filter: blur(20px) saturate(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* soft divider */
   transition: all 0.3s ease;
 }
 
+/* Brand */
 .navbar-brand {
   color: #40E0D0 !important;
   font-size: 1.8rem !important;
-  text-shadow: 0 0 15px rgba(64, 224, 208, 0.5);
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(64, 224, 208, 0.3);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
-.navbar-nav .nav-link {
+.navbar-brand:hover {
   color: #ffffff !important;
+  text-shadow: 0 0 15px rgba(64, 224, 208, 0.7);
+}
+
+/* Links */
+.navbar-nav .nav-link {
+  color: #eaeaea !important;
   font-weight: 500;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
   transition: all 0.3s ease;
   position: relative;
 }
 
 .navbar-nav .nav-link:hover {
   color: #40E0D0 !important;
+  background: rgba(64, 224, 208, 0.08); /* soft hover highlight */
   transform: translateY(-2px);
 }
 
 .navbar-nav .nav-link::after {
   content: '';
   position: absolute;
-  bottom: -5px;
+  bottom: 5px;
   left: 50%;
   width: 0;
   height: 2px;
   background: #40E0D0;
-  transition: all 0.3s ease;
+  border-radius: 5px;
+  transition: width 0.3s ease, left 0.3s ease;
   transform: translateX(-50%);
 }
 
 .navbar-nav .nav-link:hover::after {
-  width: 100%;
+  width: 50%; /* more subtle underline */
 }
 
+/* Cart / Profile Icons */
 .cart-icon {
   font-size: 1.2rem;
+  position: relative;
 }
 
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: #40E0D0;
+  color: #000;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: bold;
+  box-shadow: 0 0 6px rgba(64, 224, 208, 0.6);
+}
+
+/* Toggler */
 .navbar-toggler {
-  border-color: #40E0D0;
+  border: none;
+  outline: none;
 }
 
 .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2864, 224, 208, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  filter: drop-shadow(0 0 4px rgba(64, 224, 208, 0.6));
 }
 
 /* Utility Classes */
