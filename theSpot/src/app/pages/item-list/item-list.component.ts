@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MovieService, Movie } from '../services/movie.service';
+import { MovieService, Movie } from '../../services/movie.service';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-item-list',
   standalone: false,
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  templateUrl: './item-list.component.html',
+  styleUrl: './item-list.component.css'
 })
-export class HomeComponent implements OnInit {
-  featuredMovies: Movie[] = [];
+export class ItemListComponent {
+featuredMovies: Movie[] = [];
   searchTerm = '';
 
   constructor(
@@ -35,3 +35,4 @@ export class HomeComponent implements OnInit {
     this.movieService.addToCart(movie);
   }
 }
+
