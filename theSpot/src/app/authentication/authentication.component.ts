@@ -13,6 +13,7 @@ export class AuthenticationComponent {
   username = '';
   password = '';
   errorMessage = '';
+  email = '';
 
   constructor(
     private authService: AuthService,
@@ -22,28 +23,45 @@ export class AuthenticationComponent {
   toggleMode(isLogin: boolean): void {
     this.isLoginMode = isLogin;
     this.errorMessage = '';
+    this.email = '';
     this.username = '';
     this.password = '';
   }
 
-  onSubmit(): void {
-    if (!this.username || !this.password) {
+ onSubmit(): void {
+  if (this.isLoginMode) {
+    if (!this.email || !this.password) {
       this.errorMessage = 'Please fill in all fields';
       return;
     }
 
-    if (this.isLoginMode) {
-      if (this.authService.login(this.username, this.password)) {
+    this.authService.login(this.email, this.password).subscribe({
+      next: (res: any) => {
+        localStorage.setItem('authToken', res.token);
+        localStorage.setItem('userRole', res.user.role);
         this.router.navigate(['/home']);
-      } else {
-        this.errorMessage = 'Invalid username or password';
+      },
+      error: (err) => {
+        this.errorMessage = err.error?.message || 'Invalid login';
       }
-    } else {
-      if (this.authService.register(this.username, this.password)) {
-        this.router.navigate(['/home']);
-      } else {
-        this.errorMessage = 'Username already exists';
-      }
+    });
+
+  } else {
+    if (!this.username || !this.email || !this.password) {
+      this.errorMessage = 'Please fill in all fields';
+      return;
     }
+
+    this.authService.register(this.username, this.email, this.password).subscribe({
+      next: (res: any) => {
+        localStorage.setItem('authToken', res.token);
+        localStorage.setItem('userRole', res.user.role);
+        this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        this.errorMessage = err.error?.message || 'Registration failed';
+      }
+    });
   }
+}
 }

@@ -1,72 +1,55 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
 
-export interface User {
-  username: string;
-  isAdmin: boolean;
-}
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
-  public currentUser$ = this.currentUserSubject.asObservable();
+  private apiUrl = 'http://localhost:5000/api/auth'; // backend URL
+  private tokenKey = 'auth_token';
+  private userKey = 'auth_user';
 
-  // Dummy user data
-  private users = [
-    { username: 'admin', password: 'admin', isAdmin: true },
-    { username: 'user', password: 'user', isAdmin: false }
-  ];
+  constructor(private http: HttpClient) {}
 
-  constructor() {
-    // Check if user is already logged in
-    const savedUser = localStorage.getItem('currentUser');
-    if (savedUser) {
-      this.currentUserSubject.next(JSON.parse(savedUser));
-    }
+  login(email: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/login`, { email, password }).pipe(
+      tap((res: any) => {
+        this.setSession(res);
+      })
+    );
   }
 
-  login(username: string, password: string): boolean {
-    const user = this.users.find(u => u.username === username && u.password === password);
-    if (user) {
-      const userInfo: User = { username: user.username, isAdmin: user.isAdmin };
-      this.currentUserSubject.next(userInfo);
-      localStorage.setItem('currentUser', JSON.stringify(userInfo));
-      return true;
-    }
-    return false;
+  register(name: string, email: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, { name, email, password }).pipe(
+      tap((res: any) => {
+        this.setSession(res);
+      })
+    );
   }
 
-  register(username: string, password: string): boolean {
-    // Check if user already exists
-    if (this.users.find(u => u.username === username)) {
-      return false;
-    }
-    
-    // Add new user
-    this.users.push({ username, password, isAdmin: false });
-    const userInfo: User = { username, isAdmin: false };
-    this.currentUserSubject.next(userInfo);
-    localStorage.setItem('currentUser', JSON.stringify(userInfo));
-    return true;
+  private setSession(authResult: any): void {
+    localStorage.setItem(this.tokenKey, authResult.token);
+    localStorage.setItem(this.userKey, JSON.stringify(authResult.user));
   }
 
   logout(): void {
-    this.currentUserSubject.next(null);
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.userKey);
   }
 
-  getCurrentUser(): User | null {
-    return this.currentUserSubject.value;
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
+
+  getUser(): any {
+    const user = localStorage.getItem(this.userKey);
+    return user ? JSON.parse(user) : null;
   }
 
   isLoggedIn(): boolean {
-    return this.currentUserSubject.value !== null;
+    return !!this.getToken();
   }
 
   isAdmin(): boolean {
-    const user = this.currentUserSubject.value;
-    return user ? user.isAdmin : false;
+    return this.getUser()?.role === 'admin';
   }
 }

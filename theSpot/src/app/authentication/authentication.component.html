@@ -21,7 +21,8 @@
     </div>
 
     <form class="auth-form" (ngSubmit)="onSubmit()">
-      <div class="form-group">
+      <!-- Show Username only in Register -->
+      <div class="form-group" *ngIf="!isLoginMode">
         <label class="form-label font-bricolage">Username</label>
         <input 
           type="text" 
@@ -32,6 +33,19 @@
           placeholder="Enter your username">
       </div>
 
+      <!-- Email (always required) -->
+      <div class="form-group">
+        <label class="form-label font-bricolage">Email</label>
+        <input 
+          type="email" 
+          class="form-control font-bricolage"
+          [(ngModel)]="email"
+          name="email"
+          required
+          placeholder="Enter your email">
+      </div>
+
+      <!-- Password -->
       <div class="form-group">
         <label class="form-label font-bricolage">Password</label>
         <input 
@@ -43,10 +57,12 @@
           placeholder="Enter your password">
       </div>
 
+      <!-- Error -->
       <div *ngIf="errorMessage" class="error-message font-bricolage">
         {{ errorMessage }}
       </div>
 
+      <!-- Submit -->
       <button type="submit" class="auth-btn font-bricolage">
         {{ isLoginMode ? 'Login' : 'Register' }}
       </button>
@@ -54,8 +70,8 @@
 
     <div class="demo-credentials">
       <p class="demo-title font-bricolage">Demo Credentials:</p>
-      <p class="demo-text font-bricolage">Admin: username: <strong>admin</strong>, password: <strong>admin</strong></p>
-      <p class="demo-text font-bricolage">User: username: <strong>user</strong>, password: <strong>user</strong></p>
+      <p class="demo-text font-bricolage">Admin: email: <strong>admin&#64;email.com</strong>, password: <strong>admin</strong></p>
+      <p class="demo-text font-bricolage">User: email: <strong>user&#64;email.com</strong>, password: <strong>user</strong></p>
     </div>
   </div>
 </div>
