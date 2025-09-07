@@ -15,6 +15,7 @@ import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { AuthenticationComponent } from './pages/authentication/authentication.component';
+import { MovieDetailsComponent } from './pages/movie-details/movie-details.component';
 
 //Components
 import { MoviePosterCarouselComponent } from './components/movie-poster-carousel/movie-poster-carousel.component';
@@ -29,7 +30,8 @@ import { MoviePosterCarouselComponent } from './components/movie-poster-carousel
     ProfileComponent,
     LandingPageComponent,
     AuthenticationComponent,
-    MoviePosterCarouselComponent
+    MoviePosterCarouselComponent,
+    MovieDetailsComponent
     
   ],
   imports: [

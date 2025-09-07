@@ -1,1 +1,83 @@
-<p>cart works!</p>
+<div class="cart-container">
+  <div class="container py-5">
+    <h1 class="page-title font-bauhaus">Shopping Cart</h1>
+    
+    <!-- Cart Items -->
+    <div class="cart-content" *ngIf="cartItems.length > 0">
+      <div class="cart-items">
+        <div class="cart-item" *ngFor="let item of cartItems; trackBy: trackByMovieId">
+          <div class="item-image">
+            <img [src]="item.poster" [alt]="item.title">
+          </div>
+          
+          <div class="item-details">
+            <h3 class="item-title font-bricolage">{{ item.title }}</h3>
+            <div class="item-meta">
+              <span class="item-year">{{ item.year }}</span>
+              <span class="item-genre">{{ item.genre }}</span>
+              <span class="item-rating">
+                <i class="fas fa-star"></i> {{ item.rating }}
+              </span>
+            </div>
+            <p class="item-description">{{ item.description | slice:0:100 }}...</p>
+          </div>
+          
+          <div class="item-price">
+            <span class="price-value">R{{ item.price }}</span>
+          </div>
+          
+          <div class="item-actions">
+            <button class="btn btn-outline-danger btn-sm" (click)="removeFromCart(item.id)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Cart Summary -->
+      <div class="cart-summary">
+        <div class="summary-card">
+          <h3 class="summary-title font-bricolage">Order Summary</h3>
+          
+          <div class="summary-row">
+            <span>Items ({{ cartItems.length }})</span>
+            <span>R{{ getSubtotal() }}</span>
+          </div>
+          
+          <div class="summary-row">
+            <span>Tax</span>
+            <span>R{{ getTax() }}</span>
+          </div>
+          
+          <hr class="summary-divider">
+          
+          <div class="summary-row total-row">
+            <span class="total-label">Total</span>
+            <span class="total-value">R{{ getTotal() }}</span>
+          </div>
+          
+          <div class="checkout-section">
+            <button class="btn btn-primary btn-lg w-100 checkout-btn font-bricolage" disabled>
+              <i class="fas fa-credit-card me-2"></i>
+              Checkout (In Progress)
+            </button>
+            <p class="checkout-note font-bricolage">
+              <i class="fas fa-info-circle me-1"></i>
+              Checkout functionality coming soon
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Empty Cart -->
+    <div class="empty-cart text-center py-5" *ngIf="cartItems.length === 0">
+      <i class="fas fa-shopping-cart empty-cart-icon"></i>
+      <h2 class="font-bauhaus">Your Cart is Empty</h2>
+      <p class="font-bricolage">Add some movies to get started!</p>
+      <button class="btn btn-primary btn-lg" routerLink="/items">
+        <i class="fas fa-film me-2"></i>Browse Movies
+      </button>
+    </div>
+  </div>
+</div>

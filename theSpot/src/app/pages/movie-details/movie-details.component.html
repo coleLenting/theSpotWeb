@@ -1,0 +1,71 @@
+<div class="movie-details-container">
+  <div class="container py-5" *ngIf="!loading && movie">
+    <!-- Back Button -->
+    <button class="btn btn-outline-primary mb-4" (click)="goBack()">
+      <i class="fas fa-arrow-left me-2"></i>Back to Movies
+    </button>
+
+    <div class="row">
+      <!-- Movie Poster -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="movie-poster-container">
+          <img [src]="movie.poster" [alt]="movie.title" class="movie-poster-large">
+        </div>
+      </div>
+
+      <!-- Movie Details -->
+      <div class="col-lg-8 col-md-6">
+        <div class="movie-details-content">
+          <h1 class="movie-title font-bauhaus">{{ movie.title }}</h1>
+          
+          <div class="movie-meta mb-4">
+            <span class="meta-item">
+              <i class="fas fa-calendar-alt me-2"></i>{{ movie.year }}
+            </span>
+            <span class="meta-item">
+              <i class="fas fa-tag me-2"></i>{{ movie.genre }}
+            </span>
+            <span class="meta-item">
+              <i class="fas fa-star me-2"></i>{{ movie.rating }}/10
+            </span>
+          </div>
+
+          <div class="movie-price mb-4">
+            <span class="price-label">Rental Price:</span>
+            <span class="price-value">R{{ movie.price }}</span>
+          </div>
+
+          <div class="movie-description mb-4">
+            <h3 class="description-title font-bricolage">Description</h3>
+            <p class="description-text font-bricolage">{{ movie.description }}</p>
+          </div>
+
+          <div class="movie-actions">
+            <button class="btn btn-primary btn-lg me-3" (click)="addToCart()">
+              <i class="fas fa-cart-plus me-2"></i>Add to Cart
+            </button>
+            <button class="btn btn-outline-secondary btn-lg">
+              <i class="fas fa-heart me-2"></i>Add to Wishlist
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="container py-5 text-center" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Movie Not Found -->
+  <div class="container py-5 text-center" *ngIf="!loading && !movie">
+    <h2 class="font-bauhaus">Movie Not Found</h2>
+    <p class="font-bricolage">The movie you're looking for doesn't exist.</p>
+    <button class="btn btn-primary" routerLink="/items">
+      <i class="fas fa-arrow-left me-2"></i>Back to Movies
+    </button>
+  </div>
+</div>

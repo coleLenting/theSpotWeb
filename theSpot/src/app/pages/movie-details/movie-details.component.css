@@ -1,0 +1,137 @@
+.movie-details-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #000000 0%, #2E1A78 100%);
+  color: #ffffff;
+}
+
+.movie-poster-container {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(64, 224, 208, 0.3);
+  border: 2px solid rgba(64, 224, 208, 0.3);
+}
+
+.movie-poster-large {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.movie-poster-container:hover .movie-poster-large {
+  transform: scale(1.05);
+}
+
+.movie-details-content {
+  padding: 20px 0;
+}
+
+.movie-title {
+  font-size: 3rem;
+  color: #40E0D0;
+  margin-bottom: 20px;
+  text-shadow: 0 0 20px rgba(64, 224, 208, 0.5);
+}
+
+.movie-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.meta-item {
+  background: rgba(46, 26, 120, 0.3);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  border: 1px solid rgba(64, 224, 208, 0.2);
+}
+
+.meta-item i {
+  color: #40E0D0;
+}
+
+.movie-price {
+  background: rgba(46, 26, 120, 0.2);
+  padding: 20px;
+  border-radius: 15px;
+  border: 1px solid rgba(64, 224, 208, 0.3);
+}
+
+.price-label {
+  font-size: 1rem;
+  opacity: 0.8;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.price-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #40E0D0;
+  text-shadow: 0 0 10px rgba(64, 224, 208, 0.3);
+}
+
+.description-title {
+  color: #40E0D0;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.description-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.movie-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.btn-outline-primary {
+  border-color: #40E0D0;
+  color: #40E0D0;
+}
+
+.btn-outline-primary:hover {
+  background-color: #40E0D0;
+  border-color: #40E0D0;
+  color: #000000;
+}
+
+.btn-outline-secondary {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+}
+
+.btn-outline-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: #40E0D0;
+  color: #40E0D0;
+}
+
+@media (max-width: 768px) {
+  .movie-title {
+    font-size: 2rem;
+  }
+  
+  .movie-meta {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .meta-item {
+    text-align: center;
+  }
+  
+  .movie-actions {
+    flex-direction: column;
+  }
+  
+  .btn-lg {
+    width: 100%;
+  }
+}

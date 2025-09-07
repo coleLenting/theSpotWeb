@@ -1,1 +1,130 @@
-<p>profile works!</p>
+<div class="profile-container">
+  <div class="container py-5">
+    <h1 class="page-title font-bauhaus">My Profile</h1>
+    
+    <div class="row">
+      <!-- Profile Info -->
+      <div class="col-lg-4 mb-4">
+        <div class="profile-card">
+          <div class="profile-avatar">
+            <img [src]="profileImage" alt="Profile Picture" class="avatar-img">
+            <button class="btn btn-sm btn-outline-primary avatar-edit-btn" (click)="triggerImageUpload()">
+              <i class="fas fa-camera"></i>
+            </button>
+            <input type="file" #imageInput (change)="onImageSelected($event)" accept="image/*" style="display: none;">
+          </div>
+          
+          <div class="profile-info text-center">
+            <h3 class="profile-name font-bricolage">{{ user?.name }}</h3>
+            <p class="profile-email">{{ user?.email }}</p>
+            <span class="profile-role">{{ user?.role | titlecase }}</span>
+          </div>
+          
+          <div class="profile-stats">
+            <div class="stat-item">
+              <span class="stat-value">{{ cartCount }}</span>
+              <span class="stat-label">Cart Items</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{ watchlistCount }}</span>
+              <span class="stat-label">Watchlist</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Edit Profile Form -->
+      <div class="col-lg-8">
+        <div class="edit-profile-card">
+          <h3 class="card-title font-bricolage">Edit Profile</h3>
+          
+          <form (ngSubmit)="updateProfile()" #profileForm="ngForm">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label font-bricolage">Full Name</label>
+                <input 
+                  type="text" 
+                  class="form-control font-bricolage"
+                  [(ngModel)]="editForm.name"
+                  name="name"
+                  required>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label class="form-label font-bricolage">Username</label>
+                <input 
+                  type="text" 
+                  class="form-control font-bricolage"
+                  [(ngModel)]="editForm.username"
+                  name="username"
+                  required>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label font-bricolage">Email</label>
+              <input 
+                type="email" 
+                class="form-control font-bricolage"
+                [(ngModel)]="editForm.email"
+                name="email"
+                required
+                readonly>
+              <small class="form-text">Email cannot be changed</small>
+            </div>
+            
+            <div class="password-section">
+              <h4 class="section-title font-bricolage">Change Password</h4>
+              
+              <div class="mb-3">
+                <label class="form-label font-bricolage">Current Password</label>
+                <input 
+                  type="password" 
+                  class="form-control font-bricolage"
+                  [(ngModel)]="editForm.currentPassword"
+                  name="currentPassword">
+              </div>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label font-bricolage">New Password</label>
+                  <input 
+                    type="password" 
+                    class="form-control font-bricolage"
+                    [(ngModel)]="editForm.newPassword"
+                    name="newPassword">
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                  <label class="form-label font-bricolage">Confirm New Password</label>
+                  <input 
+                    type="password" 
+                    class="form-control font-bricolage"
+                    [(ngModel)]="editForm.confirmPassword"
+                    name="confirmPassword">
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary btn-lg me-3 font-bricolage">
+                <i class="fas fa-save me-2"></i>Save Changes
+              </button>
+              <button type="button" class="btn btn-outline-secondary btn-lg font-bricolage" (click)="resetForm()">
+                <i class="fas fa-undo me-2"></i>Reset
+              </button>
+            </div>
+            
+            <div class="alert alert-success mt-3" *ngIf="successMessage">
+              <i class="fas fa-check-circle me-2"></i>{{ successMessage }}
+            </div>
+            
+            <div class="alert alert-danger mt-3" *ngIf="errorMessage">
+              <i class="fas fa-exclamation-circle me-2"></i>{{ errorMessage }}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
