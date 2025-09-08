@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { MovieService } from './services/movie.service';
-import { MovieService } from './services/movie.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,20 +12,13 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit {
   title = 'theSpot';
   cartCount = 0;
-  cartCount = 0;
 
   constructor(
     private authService: AuthService,
     private movieService: MovieService,
-    private movieService: MovieService,
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.movieService.cart$.subscribe(cart => {
-      this.cartCount = cart.length;
-    });
-  }
   ngOnInit(): void {
     this.movieService.cart$.subscribe(cart => {
       this.cartCount = cart.length;

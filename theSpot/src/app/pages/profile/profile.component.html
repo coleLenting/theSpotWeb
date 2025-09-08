@@ -39,18 +39,7 @@
           <h3 class="card-title font-bricolage">Edit Profile</h3>
           
           <form (ngSubmit)="updateProfile()" #profileForm="ngForm">
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label class="form-label font-bricolage">Full Name</label>
-                <input 
-                  type="text" 
-                  class="form-control font-bricolage"
-                  [(ngModel)]="editForm.name"
-                  name="name"
-                  required>
-              </div>
-              
-              <div class="col-md-6 mb-3">
+            <div class="mb-3">           
                 <label class="form-label font-bricolage">Username</label>
                 <input 
                   type="text" 
@@ -58,7 +47,7 @@
                   [(ngModel)]="editForm.username"
                   name="username"
                   required>
-              </div>
+  
             </div>
             
             <div class="mb-3">

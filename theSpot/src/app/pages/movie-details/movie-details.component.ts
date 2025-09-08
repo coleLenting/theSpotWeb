@@ -19,16 +19,16 @@ export class MovieDetailsComponent implements OnInit {
     private location: Location,
     private movieService: MovieService
   ) {}
-
-  ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (id) {
-      this.movie = this.movieService.getMovie(id);
-      this.loading = false;
-    } else {
-      this.router.navigate(['/items']);
-    }
+  
+ngOnInit(): void {
+  const id = Number(this.route.snapshot.paramMap.get('id'));
+  if (id) {
+    this.movie = this.movieService.getMovie(id) ?? null; // Convert undefined to null
+    this.loading = false;
+  } else {
+    this.router.navigate(['/items']);
   }
+}
 
   addToCart(): void {
     if (this.movie) {

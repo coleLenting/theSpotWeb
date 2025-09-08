@@ -15,7 +15,6 @@ export class ProfileComponent {
   profileImage = 'https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=400';
   
   editForm = {
-    name: '',
     username: '',
     email: '',
     currentPassword: '',
@@ -34,7 +33,6 @@ export class ProfileComponent {
   ngOnInit(): void {
     this.user = this.authService.getUser();
     if (this.user) {
-      this.editForm.name = this.user.name;
       this.editForm.username = this.user.name; // Using name as username for now
       this.editForm.email = this.user.email;
     }
@@ -93,7 +91,7 @@ export class ProfileComponent {
       
       // Update local user data
       if (this.user) {
-        this.user.name = this.editForm.name;
+        this.user.name = this.editForm.username;
         localStorage.setItem('auth_user', JSON.stringify(this.user));
       }
       
@@ -111,7 +109,6 @@ export class ProfileComponent {
 
   resetForm(): void {
     if (this.user) {
-      this.editForm.name = this.user.name;
       this.editForm.username = this.user.name;
       this.editForm.email = this.user.email;
     }
