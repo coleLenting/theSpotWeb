@@ -1,9 +1,23 @@
 const express = require('express');
+const mongoose = require('mongoose'); // ✅ ADD THIS MISSING IMPORT
 const User = require('../models/User');
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
 
 const router = express.Router();
+
+/**
+ * GET /api/users
+ * Get all users (admin only) - for admin panel
+ */
+router.get('/', auth, admin, async (req, res, next) => {
+  try {
+    const users = await User.find().select('-passwordHash').sort({ createdAt: -1 });
+    res.json(users);
+  } catch (err) {
+    next(err);
+  }
+});
 
 /**
  * POST /api/users/:id/make-admin
@@ -42,6 +56,11 @@ router.post('/:id/make-admin', auth, admin, async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+});
+// Debug registered routes
+console.log('📝 Registered routes:');
+router.stack.forEach(layer => {
+  console.log(`${layer.route?.stack[0]?.method?.toUpperCase()} ${layer.route?.path}`);
 });
 
 module.exports = router;

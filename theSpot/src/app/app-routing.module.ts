@@ -9,6 +9,7 @@ import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { MovieDetailsComponent } from './pages/movie-details/movie-details.component';
 import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' },
@@ -18,7 +19,7 @@ const routes: Routes = [
   { path: 'items', component: ItemListComponent, canActivate: [AuthGuard] },
   { path: 'movie/:id', component: MovieDetailsComponent, canActivate: [AuthGuard] },
   { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
-  { path: 'admin', component: AdminPanelComponent, canActivate: [AuthGuard] },
+  { path: 'admin', component: AdminPanelComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/landing' }
 ];

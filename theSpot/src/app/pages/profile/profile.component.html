@@ -96,10 +96,12 @@
             </div>
             
             <div class="form-actions">
-              <button type="submit" class="btn btn-primary btn-lg me-3 font-bricolage">
-                <i class="fas fa-save me-2"></i>Save Changes
+              <button type="submit" class="btn btn-primary btn-lg me-3 font-bricolage" [disabled]="isLoading">
+                <i class="fas fa-spinner fa-spin me-2" *ngIf="isLoading"></i>
+                <i class="fas fa-save me-2" *ngIf="!isLoading"></i>
+                {{ isLoading ? 'Saving...' : 'Save Changes' }}
               </button>
-              <button type="button" class="btn btn-outline-secondary btn-lg font-bricolage" (click)="resetForm()">
+              <button type="button" class="btn btn-outline-secondary btn-lg font-bricolage" (click)="resetForm()" [disabled]="isLoading">
                 <i class="fas fa-undo me-2"></i>Reset
               </button>
             </div>

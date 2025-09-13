@@ -1,1 +1,376 @@
-<p>admin-panel works!</p>
+<div class="admin-panel-container">
+  <div class="container-fluid py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <h1 class="font-bauhaus text-primary mb-0">Admin Panel</h1>
+        <p class="text-muted font-bricolage">Manage movies and users</p>
+      </div>
+    </div>
+
+    <!-- Messages -->
+    <div class="row mb-3" *ngIf="successMessage || errorMessage">
+      <div class="col-12">
+        <div class="alert alert-success alert-dismissible fade show" *ngIf="successMessage">
+          <i class="fas fa-check-circle me-2"></i>{{ successMessage }}
+          <button type="button" class="btn-close" (click)="successMessage = ''"></button>
+        </div>
+        <div class="alert alert-danger alert-dismissible fade show" *ngIf="errorMessage">
+          <i class="fas fa-exclamation-circle me-2"></i>{{ errorMessage }}
+          <button type="button" class="btn-close" (click)="errorMessage = ''"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <ul class="nav nav-pills admin-tabs">
+          <li class="nav-item">
+            <button 
+              class="nav-link font-bricolage" 
+              [class.active]="activeTab === 'movies'"
+              (click)="setActiveTab('movies')">
+              <i class="fas fa-film me-2"></i>Movies
+            </button>
+          </li>
+          <li class="nav-item">
+            <button 
+              class="nav-link font-bricolage" 
+              [class.active]="activeTab === 'users'"
+              (click)="setActiveTab('users')">
+              <i class="fas fa-users me-2"></i>Users
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Movies Tab -->
+    <div *ngIf="activeTab === 'movies'" class="fade-in">
+      <!-- Movies Header -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <h3 class="font-bricolage">Movie Management</h3>
+          <p class="text-muted">Total: {{ totalMovies }} movies</p>
+        </div>
+        <div class="col-md-6 text-end">
+          <button class="btn btn-primary" (click)="showAddMovieForm()" [disabled]="isLoading">
+            <i class="fas fa-plus me-2"></i>Add New Movie
+          </button>
+        </div>
+      </div>
+
+      <!-- Movie Form Modal -->
+      <div class="modal-overlay" *ngIf="showMovieForm" (click)="cancelMovieForm()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+          <div class="modal-header">
+            <h4 class="font-bricolage">{{ editingMovie ? 'Edit Movie' : 'Add New Movie' }}</h4>
+            <button class="btn-close" (click)="cancelMovieForm()"></button>
+          </div>
+          <div class="modal-body">
+            <form (ngSubmit)="saveMovie()" #movieFormRef="ngForm">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Title *</label>
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    [(ngModel)]="movieForm.title" 
+                    name="title"
+                    required>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <label class="form-label">Year *</label>
+                  <input 
+                    type="number" 
+                    class="form-control" 
+                    [(ngModel)]="movieForm.year" 
+                    name="year"
+                    min="1900" 
+                    [max]="maxYear"
+                    required>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <label class="form-label">Rating *</label>
+                  <input 
+                    type="number" 
+                    class="form-control" 
+                    [(ngModel)]="movieForm.rating" 
+                    name="rating"
+                    min="0" 
+                    max="10" 
+                    step="0.1"
+                    required>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Genre *</label>
+                  <select class="form-control" [(ngModel)]="movieForm.genre" name="genre" required>
+                    <option value="">Select Genre</option>
+                    <option *ngFor="let genre of getGenres()" [value]="genre">{{ genre }}</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Price *</label>
+                  <input 
+                    type="number" 
+                    class="form-control" 
+                    [(ngModel)]="movieForm.price" 
+                    name="price"
+                    min="0" 
+                    step="0.01"
+                    required>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label class="form-label">Poster URL *</label>
+                <input 
+                  type="url" 
+                  class="form-control" 
+                  [(ngModel)]="movieForm.poster" 
+                  name="poster"
+                  required>
+              </div>
+              
+              <div class="mb-3">
+                <label class="form-label">Trailer URL</label>
+                <input 
+                  type="url" 
+                  class="form-control" 
+                  [(ngModel)]="movieForm.trailer" 
+                  name="trailer">
+              </div>
+              
+              <div class="mb-3">
+                <label class="form-label">Description *</label>
+                <textarea 
+                  class="form-control" 
+                  rows="4" 
+                  [(ngModel)]="movieForm.description" 
+                  name="description"
+                  required></textarea>
+              </div>
+              
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary me-2" (click)="cancelMovieForm()">
+                  Cancel
+                </button>
+                <button 
+                  type="submit" 
+                  class="btn btn-primary" 
+                  [disabled]="isLoading || !movieFormRef.form.valid">
+                  <i class="fas fa-spinner fa-spin me-2" *ngIf="isLoading"></i>
+                  {{ editingMovie ? 'Update' : 'Create' }} Movie
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Movies List -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive" *ngIf="!isLoading">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Poster</th>
+                      <th>Title</th>
+                      <th>Year</th>
+                      <th>Genre</th>
+                      <th>Rating</th>
+                      <th>Price</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let movie of movies">
+                      <td>
+                        <img [src]="movie.poster" [alt]="movie.title" class="movie-thumbnail">
+                      </td>
+                      <td class="fw-bold">{{ movie.title }}</td>
+                      <td>{{ movie.year }}</td>
+                      <td>{{ movie.genre }}</td>
+                      <td>
+                        <span class="badge bg-warning text-dark">
+                          <i class="fas fa-star me-1"></i>{{ movie.rating }}
+                        </span>
+                      </td>
+                      <td>${{ movie.price }}</td>
+                      <td>
+                        <button 
+                          class="btn btn-sm btn-outline-primary me-2" 
+                          (click)="editMovie(movie)"
+                          [disabled]="isLoading">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button 
+                          class="btn btn-sm btn-outline-danger" 
+                          (click)="deleteMovie(movie)"
+                          [disabled]="isLoading">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <!-- Loading -->
+              <div class="text-center py-4" *ngIf="isLoading">
+                <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
+                <p class="mt-2">Loading movies...</p>
+              </div>
+              
+              <!-- Empty state -->
+              <div class="text-center py-4" *ngIf="!isLoading && movies.length === 0">
+                <i class="fas fa-film fa-3x text-muted mb-3"></i>
+                <h5>No movies found</h5>
+                <p class="text-muted">Add your first movie to get started</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="row mt-3" *ngIf="totalPages > 1">
+        <div class="col-12">
+          <nav>
+            <ul class="pagination justify-content-center">
+              <li class="page-item" [class.disabled]="currentPage === 1">
+                <button class="page-link" (click)="goToPage(currentPage - 1)">Previous</button>
+              </li>
+              <li 
+                class="page-item" 
+                *ngFor="let page of [].constructor(totalPages); let i = index"
+                [class.active]="currentPage === i + 1">
+                <button class="page-link" (click)="goToPage(i + 1)">{{ i + 1 }}</button>
+              </li>
+              <li class="page-item" [class.disabled]="currentPage === totalPages">
+                <button class="page-link" (click)="goToPage(currentPage + 1)">Next</button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <!-- Users Tab -->
+    <div *ngIf="activeTab === 'users'" class="fade-in">
+      <div class="row">
+        <!-- Users List -->
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="font-bricolage mb-0">
+                <i class="fas fa-users me-2"></i>All Users
+              </h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive" *ngIf="!isLoading">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>Joined</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let user of users">
+                      <td class="fw-bold">{{ user.name }}</td>
+                      <td>{{ user.email }}</td>
+                      <td>
+                        <span class="badge" 
+                              [class.bg-success]="user.role === 'admin'"
+                              [class.bg-secondary]="user.role === 'client'">
+                          <i class="fas fa-crown me-1" *ngIf="user.role === 'admin'"></i>
+                          <i class="fas fa-user me-1" *ngIf="user.role === 'client'"></i>
+                          {{ user.role | titlecase }}
+                        </span>
+                      </td>
+                      <td>{{ user.createdAt | date:'short' }}</td>
+                      <td>
+                        <button 
+                          class="btn btn-sm btn-outline-warning" 
+                          (click)="userIdToPromote = user._id"
+                          [disabled]="user.role === 'admin'"
+                          *ngIf="user.role !== 'admin'">
+                          <i class="fas fa-crown me-1"></i>Make Admin
+                        </button>
+                        <span class="text-muted" *ngIf="user.role === 'admin'">
+                          <i class="fas fa-check me-1"></i>Admin
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <!-- Loading -->
+              <div class="text-center py-4" *ngIf="isLoading">
+                <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
+                <p class="mt-2">Loading users...</p>
+              </div>
+              
+              <!-- Empty state -->
+              <div class="text-center py-4" *ngIf="!isLoading && users.length === 0">
+                <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                <h5>No users found</h5>
+                <p class="text-muted">Users will appear here once they register</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Promote User Panel -->
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="font-bricolage mb-0">
+                <i class="fas fa-user-shield me-2"></i>Promote User
+              </h4>
+            </div>
+            <div class="card-body">
+              <h5>Make Admin</h5>
+              <p class="text-muted">Select a user from the list or enter their ID manually</p>
+              
+              <div class="mb-3">
+                <label class="form-label">User ID</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  placeholder="Enter User ID" 
+                  [(ngModel)]="userIdToPromote">
+              </div>
+              
+              <button 
+                class="btn btn-primary w-100" 
+                (click)="promoteUser()"
+                [disabled]="isLoading || !userIdToPromote.trim()">
+                <i class="fas fa-spinner fa-spin me-2" *ngIf="isLoading"></i>
+                <i class="fas fa-crown me-2" *ngIf="!isLoading"></i>
+                Promote to Admin
+              </button>
+              
+              <div class="alert alert-info mt-3">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Tip:</strong> Click "Make Admin" next to any user in the list to auto-fill their ID.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

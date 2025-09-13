@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { ApiService, Movie as ApiMovie } from './api.service';
 
 export interface Movie {
   id: number;
+  _id?: string;
   title: string;
   year: number;
   genre: string;
@@ -25,6 +27,8 @@ export class MovieService {
 
   private watchlistSubject = new BehaviorSubject<Movie[]>([]);
   public watchlist$ = this.watchlistSubject.asObservable();
+
+  private useBackend = true; // Flag to switch between backend and dummy data
 
   // Dummy movie data
   private movies: Movie[] = [
@@ -150,8 +154,13 @@ export class MovieService {
     }
   ];
 
-  constructor() {
-    this.moviesSubject.next(this.movies);
+  constructor(private apiService: ApiService) {
+    // Load movies from backend or use dummy data
+    if (this.useBackend) {
+      this.loadMoviesFromBackend();
+    } else {
+      this.moviesSubject.next(this.movies);
+    }
     
     // Load cart and watchlist from localStorage
     const savedCart = localStorage.getItem('cart');
@@ -165,16 +174,54 @@ export class MovieService {
     }
   }
 
+  private loadMoviesFromBackend(): void {
+    this.apiService.getMovies(1, 50).subscribe({
+      next: (response) => {
+        // The API service already converts backend items to frontend movies
+        const backendMovies = response.items.map((movie: any) => ({
+          id: parseInt(movie._id?.slice(-6) || '0', 16), // Convert _id to number for compatibility
+          _id: movie._id,
+          title: movie.title,
+          year: movie.year,
+          genre: movie.genre,
+          rating: movie.rating,
+          description: movie.description,
+          poster: movie.poster,
+          price: movie.price,
+          trailer: movie.trailer
+        }));
+        
+        // If no movies in backend, use dummy data
+        if (backendMovies.length === 0) {
+          this.moviesSubject.next(this.movies);
+        } else {
+          this.moviesSubject.next(backendMovies);
+        }
+      },
+      error: (error) => {
+        console.warn('Failed to load movies from backend, using dummy data:', error);
+        this.moviesSubject.next(this.movies);
+      }
+    });
+  }
+
   getMovies(): Movie[] {
-    return this.movies;
+    return this.moviesSubject.value;
   }
 
   getMovie(id: number): Movie | undefined {
-    return this.movies.find(movie => movie.id === id);
+    return this.moviesSubject.value.find(movie => movie.id === id);
+  }
+
+  // Method to refresh movies from backend
+  refreshMovies(): void {
+    if (this.useBackend) {
+      this.loadMoviesFromBackend();
+    }
   }
 
   getFeaturedMovies(): Movie[] {
-    return this.movies.slice(0, 3);
+    return this.moviesSubject.value.slice(0, 3);
   }
 
   addToCart(movie: Movie): void {

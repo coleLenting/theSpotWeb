@@ -18,7 +18,10 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.featuredMovies = this.movieService.getFeaturedMovies();
+    // Subscribe to movies changes to update featured movies
+    this.movieService.movies$.subscribe(movies => {
+      this.featuredMovies = this.movieService.getFeaturedMovies();
+    });
   }
 
   onSearch(): void {

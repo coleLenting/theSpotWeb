@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { MovieService } from '../../services/movie.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-profile',
@@ -8,11 +9,12 @@ import { MovieService } from '../../services/movie.service';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
   user: any = null;
   cartCount = 0;
   watchlistCount = 0;
   profileImage = 'https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=400';
+  isLoading = false;
   
   editForm = {
     username: '',
@@ -27,13 +29,14 @@ export class ProfileComponent {
 
   constructor(
     private authService: AuthService,
-    private movieService: MovieService
+    private movieService: MovieService,
+    private apiService: ApiService
   ) {}
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
     if (this.user) {
-      this.editForm.username = this.user.name; // Using name as username for now
+      this.editForm.username = this.user.name;
       this.editForm.email = this.user.email;
     }
     
@@ -66,45 +69,66 @@ export class ProfileComponent {
   updateProfile(): void {
     this.errorMessage = '';
     this.successMessage = '';
+    this.isLoading = true;
     
     // Validate passwords if changing
     if (this.editForm.newPassword) {
       if (!this.editForm.currentPassword) {
         this.errorMessage = 'Current password is required to change password';
+        this.isLoading = false;
         return;
       }
       
       if (this.editForm.newPassword !== this.editForm.confirmPassword) {
         this.errorMessage = 'New passwords do not match';
+        this.isLoading = false;
         return;
       }
       
       if (this.editForm.newPassword.length < 6) {
         this.errorMessage = 'New password must be at least 6 characters';
+        this.isLoading = false;
         return;
       }
     }
     
-    // Simulate API call (replace with actual API call later)
-    setTimeout(() => {
-      this.successMessage = 'Profile updated successfully!';
-      
-      // Update local user data
-      if (this.user) {
-        this.user.name = this.editForm.username;
-        localStorage.setItem('auth_user', JSON.stringify(this.user));
+    // Prepare update data
+    const updateData: any = {};
+    
+    if (this.editForm.username !== this.user?.name) {
+      updateData.name = this.editForm.username;
+    }
+    
+    if (this.editForm.newPassword) {
+      updateData.currentPassword = this.editForm.currentPassword;
+      updateData.newPassword = this.editForm.newPassword;
+    }
+    
+    // Call API to update profile
+    this.apiService.updateProfile(updateData).subscribe({
+      next: (response) => {
+        this.successMessage = 'Profile updated successfully!';
+        this.isLoading = false;
+        
+        // Update local user data with new token and user info
+        this.authService.updateUserData(response.user);
+        this.user = response.user;
+        
+        // Clear password fields
+        this.editForm.currentPassword = '';
+        this.editForm.newPassword = '';
+        this.editForm.confirmPassword = '';
+        
+        // Clear success message after 3 seconds
+        setTimeout(() => {
+          this.successMessage = '';
+        }, 3000);
+      },
+      error: (error) => {
+        this.errorMessage = error.error?.message || 'Failed to update profile';
+        this.isLoading = false;
       }
-      
-      // Clear password fields
-      this.editForm.currentPassword = '';
-      this.editForm.newPassword = '';
-      this.editForm.confirmPassword = '';
-      
-      // Clear success message after 3 seconds
-      setTimeout(() => {
-        this.successMessage = '';
-      }, 3000);
-    }, 1000);
+    });
   }
 
   resetForm(): void {

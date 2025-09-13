@@ -1,14 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, BehaviorSubject } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = 'http://localhost:5000/api/auth'; // backend URL
+  private apiUrl = `${environment.apiUrl}/auth`;
   private tokenKey = 'auth_token';
   private userKey = 'auth_user';
+  
+  private userSubject = new BehaviorSubject<any>(null);
+  public user$ = this.userSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    // Initialize user from localStorage
+    const user = this.getUser();
+    if (user) {
+      this.userSubject.next(user);
+    }
+  }
 
   login(email: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, { email, password }).pipe(
@@ -29,11 +39,18 @@ export class AuthService {
   private setSession(authResult: any): void {
     localStorage.setItem(this.tokenKey, authResult.token);
     localStorage.setItem(this.userKey, JSON.stringify(authResult.user));
+    this.userSubject.next(authResult.user);
+  }
+
+  updateUserData(user: any): void {
+    localStorage.setItem(this.userKey, JSON.stringify(user));
+    this.userSubject.next(user);
   }
 
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.userKey);
+    this.userSubject.next(null);
   }
 
   getToken(): string | null {
