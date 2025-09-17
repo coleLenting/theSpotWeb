@@ -298,4 +298,8 @@ export class MovieService {
     this.cartSubject.next([]);
     localStorage.removeItem('cart');
   }
+
+  isInCart(movieId: number): boolean {
+    return this.cartSubject.value.some(item => item.id === movieId);
+  }
 }

@@ -37,4 +37,12 @@ export class HomeComponent implements OnInit {
   addToCart(movie: Movie): void {
     this.movieService.addToCart(movie);
   }
+
+  removeFromCart(movieId: number): void {
+    this.movieService.removeFromCart(movieId);
+  }
+
+  isInCart(movieId: number): boolean {
+    return this.movieService.isInCart(movieId);
+  }
 }

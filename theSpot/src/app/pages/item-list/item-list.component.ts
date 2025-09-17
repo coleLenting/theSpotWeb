@@ -51,7 +51,15 @@ export class ItemListComponent implements OnInit {
     this.router.navigate(['/movie', movieId]);
   }
 
+  isInCart(movieId: number): boolean {
+    return this.movieService.isInCart(movieId);
+  }
+
   addToCart(movie: Movie): void {
     this.movieService.addToCart(movie);
+  }
+
+  removeFromCart(movieId: number): void {
+    this.movieService.removeFromCart(movieId);
   }
 }

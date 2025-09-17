@@ -37,8 +37,19 @@
               <button class="overlay-btn" (click)="viewMovie(movie.id)">
                 <i class="fas fa-info-circle"></i>
               </button>
-              <button class="overlay-btn" (click)="addToCart(movie)">
+              <button 
+                class="overlay-btn" 
+                *ngIf="!isInCart(movie.id)" 
+                (click)="addToCart(movie)" 
+                title="Add to Cart">
                 <i class="fas fa-cart-plus"></i>
+              </button>
+              <button 
+                class="overlay-btn" 
+                *ngIf="isInCart(movie.id)" 
+                (click)="removeFromCart(movie.id)" 
+                title="Remove from Cart">
+                <i class="fa fa-remove "></i>
               </button>
             </div>
           </div>
