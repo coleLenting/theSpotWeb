@@ -38,6 +38,12 @@ const ItemSchema = new mongoose.Schema(
       ],
       default: 'Drama'
     },
+    rating:{
+      type: Number,
+      min: 0,
+      max: 10,
+      default: 0
+    },
     dailyRate: {
       type: Number,
       required: [true, 'Daily rate is required'],
@@ -47,6 +53,7 @@ const ItemSchema = new mongoose.Schema(
       type: Boolean,
       default: true
     },
+    
     releaseYear: {
       type: Number,
       min: 1900,

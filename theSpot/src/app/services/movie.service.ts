@@ -30,6 +30,14 @@ export class MovieService {
 
   private useBackend = true; // Flag to switch between backend and dummy data
 
+  refreshPage(): void {
+    window.location.reload();
+  }
+
+  refreshData(): void {
+    this.loadMoviesFromBackend(); 
+  }
+  
   // Dummy movie data
   private movies: Movie[] = [
     {
@@ -205,6 +213,29 @@ export class MovieService {
     });
   }
 
+  public reloadMoviesFromBackend(): void {
+    this.apiService.getMovies(1, 50).subscribe({
+      next: (response) => {
+        const backendMovies = response.items.map((movie: any) => ({
+          id: parseInt(movie._id?.slice(-6) || '0', 16),
+          _id: movie._id,
+          title: movie.title,
+          year: movie.year,
+          genre: movie.genre,
+          rating: movie.rating,
+          description: movie.description,
+          poster: movie.poster,
+          price: movie.price,
+          trailer: movie.trailer
+        }));
+        this.moviesSubject.next(backendMovies.length === 0 ? this.movies : backendMovies);
+      },
+      error: (error) => {
+        this.moviesSubject.next(this.movies);
+      }
+    });
+  }
+
   getMovies(): Movie[] {
     return this.moviesSubject.value;
   }
@@ -238,6 +269,7 @@ export class MovieService {
     const updatedCart = currentCart.filter(item => item.id !== movieId);
     this.cartSubject.next(updatedCart);
     localStorage.setItem('cart', JSON.stringify(updatedCart));
+    this.refreshData();
   }
 
   addToWatchlist(movie: Movie): void {
@@ -246,6 +278,7 @@ export class MovieService {
       const updatedWatchlist = [...currentWatchlist, movie];
       this.watchlistSubject.next(updatedWatchlist);
       localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist));
+      this.refreshData();
     }
   }
 
@@ -254,6 +287,7 @@ export class MovieService {
     const updatedWatchlist = currentWatchlist.filter(item => item.id !== movieId);
     this.watchlistSubject.next(updatedWatchlist);
     localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist));
+    this.refreshData();
   }
 
   getCartTotal(): number {

@@ -24,6 +24,7 @@ export interface BackendItem {
   title: string;
   description: string;
   genre: string;
+  rating: number;
   dailyRate: number;
   inStock: boolean;
   releaseYear?: number;
@@ -55,7 +56,7 @@ export class ApiService {
       title: item.title,
       year: item.releaseYear || new Date().getFullYear(),
       genre: item.genre,
-      rating: 8.0, // Default rating since backend doesn't have this field
+      rating: item.rating ?? 0,
       description: item.description,
       poster: item.imageUrl || 'https://images.pexels.com/photos/274937/pexels-photo-274937.jpeg?auto=compress&cs=tinysrgb&w=400',
       price: item.dailyRate,
@@ -71,6 +72,7 @@ export class ApiService {
       title: movie.title,
       description: movie.description,
       genre: movie.genre,
+      rating: movie.rating,
       dailyRate: movie.price,
       releaseYear: movie.year,
       imageUrl: movie.poster,

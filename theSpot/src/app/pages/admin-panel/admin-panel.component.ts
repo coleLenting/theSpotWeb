@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService, Movie } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
+import { MovieService } from '../../services/movie.service';
 
 @Component({
   selector: 'app-admin-panel',
@@ -45,7 +46,8 @@ export class AdminPanelComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private authService: AuthService
+    private authService: AuthService,
+    private movieService: MovieService // <-- Inject MovieService
   ) {}
 
   ngOnInit(): void {
@@ -110,6 +112,18 @@ export class AdminPanelComponent implements OnInit {
     this.clearMessages();
   }
 
+  refreshPage(): void {
+  window.location.reload();
+}
+
+refreshData(): void {
+  if (this.activeTab === 'movies') {
+    this.loadMovies();
+  } else if (this.activeTab === 'users') {
+    this.loadUsers();
+  }
+}
+
   editMovie(movie: Movie): void {
     this.editingMovie = movie;
     this.movieForm = { ...movie };
@@ -119,16 +133,14 @@ export class AdminPanelComponent implements OnInit {
 
   saveMovie(): void {
     if (!this.validateMovieForm()) return;
-    
     this.isLoading = true;
-    
     if (this.editingMovie) {
-      // Update existing movie
       this.apiService.updateMovie(this.editingMovie._id!, this.movieForm).subscribe({
         next: (response) => {
           this.successMessage = 'Movie updated successfully!';
           this.showMovieForm = false;
-          this.loadMovies();
+          this.movieService.refreshMovies(); 
+          this.loadMovies(); 
           this.isLoading = false;
         },
         error: (error) => {
@@ -137,12 +149,12 @@ export class AdminPanelComponent implements OnInit {
         }
       });
     } else {
-      // Create new movie
       this.apiService.createMovie(this.movieForm).subscribe({
         next: (response) => {
           this.successMessage = 'Movie created successfully!';
           this.showMovieForm = false;
-          this.loadMovies();
+          this.movieService.refreshMovies(); 
+          this.loadMovies(); 
           this.isLoading = false;
         },
         error: (error) => {
@@ -155,12 +167,12 @@ export class AdminPanelComponent implements OnInit {
 
   deleteMovie(movie: Movie): void {
     if (!confirm(`Are you sure you want to delete "${movie.title}"?`)) return;
-    
     this.isLoading = true;
     this.apiService.deleteMovie(movie._id!).subscribe({
       next: (response) => {
         this.successMessage = 'Movie deleted successfully!';
-        this.loadMovies();
+        this.movieService.refreshMovies(); 
+        this.loadMovies(); 
         this.isLoading = false;
       },
       error: (error) => {
@@ -220,6 +232,7 @@ export class AdminPanelComponent implements OnInit {
         this.successMessage = `User promoted to admin successfully!`;
         this.userIdToPromote = '';
         this.loadUsers(); // Refresh the users list
+        this.refreshData();
         this.isLoading = false;
       },
       error: (error) => {

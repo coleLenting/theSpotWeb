@@ -8,10 +8,6 @@
         <div class="profile-card">
           <div class="profile-avatar">
             <img [src]="profileImage" alt="Profile Picture" class="avatar-img">
-            <button class="btn btn-sm btn-outline-primary avatar-edit-btn" (click)="triggerImageUpload()">
-              <i class="fas fa-camera"></i>
-            </button>
-            <input type="file" #imageInput (change)="onImageSelected($event)" accept="image/*" style="display: none;">
           </div>
           
           <div class="profile-info text-center">

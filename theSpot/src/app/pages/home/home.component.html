@@ -35,7 +35,7 @@
             <img [src]="movie.poster" [alt]="movie.title">
             <div class="movie-overlay">
               <button class="overlay-btn" (click)="viewMovie(movie.id)">
-                <i class="fas fa-play"></i>
+                <i class="fas fa-info-circle"></i>
               </button>
               <button class="overlay-btn" (click)="addToCart(movie)">
                 <i class="fas fa-cart-plus"></i>
@@ -50,7 +50,7 @@
                 <i class="fas fa-star"></i> {{ movie.rating }}
               </span>
             </div>
-            <p class="movie-price font-bricolage">${{ movie.price }}</p>
+            <p class="movie-price font-bricolage">R{{ movie.price }}</p>
           </div>
         </div>
       </div>
