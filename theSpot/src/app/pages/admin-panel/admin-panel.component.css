@@ -255,3 +255,7 @@ select.form-control option {
     transform: translateY(0); 
   }
 }
+
+.color-text {
+  color: #40E0D0;
+}

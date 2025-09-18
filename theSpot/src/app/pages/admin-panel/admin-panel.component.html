@@ -3,8 +3,8 @@
     <!-- Header -->
     <div class="row mb-4">
       <div class="col-12">
-        <h1 class="font-bauhaus text-primary mb-0">Admin Panel</h1>
-        <p class="text-muted font-bricolage">Manage movies and users</p>
+        <h1 class="font-bauhaus color-text mb-0">Admin Panel</h1>
+        <p class="text-light font-bricolage">Manage movies and users</p>
       </div>
     </div>
 
@@ -51,11 +51,11 @@
       <!-- Movies Header -->
       <div class="row mb-3">
         <div class="col-md-6">
-          <h3 class="font-bricolage">Movie Management</h3>
-          <p class="text-muted">Total: {{ totalMovies }} movies</p>
+          <h3 class="font-bricolage text-light">Movie Management</h3>
+          <p class="text-light">Total: {{ totalMovies }} movies</p>
         </div>
         <div class="col-md-6 text-end">
-          <button class="btn btn-primary" (click)="showAddMovieForm()" [disabled]="isLoading">
+          <button class="btn btn-primary text-light" (click)="showAddMovieForm()" [disabled]="isLoading">
             <i class="fas fa-plus me-2"></i>Add New Movie
           </button>
         </div>
@@ -224,16 +224,16 @@
               </div>
               
               <!-- Loading -->
-              <div class="text-center py-4" *ngIf="isLoading">
+              <div class="text-center py-4 text-light" *ngIf="isLoading">
                 <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
                 <p class="mt-2">Loading movies...</p>
               </div>
               
               <!-- Empty state -->
-              <div class="text-center py-4" *ngIf="!isLoading && movies.length === 0">
-                <i class="fas fa-film fa-3x text-muted mb-3"></i>
+              <div class="text-center py-4 text-light" *ngIf="!isLoading && movies.length === 0">
+                <i class="fas fa-film fa-3x text-light mb-3"></i>
                 <h5>No movies found</h5>
-                <p class="text-muted">Add your first movie to get started</p>
+                <p class="text-light">Add your first movie to get started</p>
               </div>
             </div>
           </div>
@@ -270,7 +270,7 @@
         <div class="col-md-8">
           <div class="card">
             <div class="card-header">
-              <h4 class="font-bricolage mb-0">
+              <h4 class="font-bricolage text-light mb-0">
                 <i class="fas fa-users me-2"></i>All Users
               </h4>
             </div>
@@ -308,7 +308,7 @@
                           *ngIf="user.role !== 'admin'">
                           <i class="fas fa-crown me-1"></i>Make Admin
                         </button>
-                        <span class="text-muted" *ngIf="user.role === 'admin'">
+                        <span class="text-light" *ngIf="user.role === 'admin'">
                           <i class="fas fa-check me-1"></i>Admin
                         </span>
                       </td>
@@ -318,16 +318,16 @@
               </div>
               
               <!-- Loading -->
-              <div class="text-center py-4" *ngIf="isLoading">
+              <div class="text-center py-4 text-light" *ngIf="isLoading">
                 <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
                 <p class="mt-2">Loading users...</p>
               </div>
               
               <!-- Empty state -->
-              <div class="text-center py-4" *ngIf="!isLoading && users.length === 0">
-                <i class="fas fa-users fa-3x text-muted mb-3"></i>
+              <div class="text-center py-4 text-light" *ngIf="!isLoading && users.length === 0">
+                <i class="fas fa-users fa-3x text-light mb-3"></i>
                 <h5>No users found</h5>
-                <p class="text-muted">Users will appear here once they register</p>
+                <p class="text-light">Users will appear here once they register</p>
               </div>
             </div>
           </div>
@@ -336,14 +336,14 @@
         <!-- Promote User Panel -->
         <div class="col-md-4">
           <div class="card">
-            <div class="card-header">
+            <div class="card-header text-light">
               <h4 class="font-bricolage mb-0">
                 <i class="fas fa-user-shield me-2"></i>Promote User
               </h4>
             </div>
             <div class="card-body">
-              <h5>Make Admin</h5>
-              <p class="text-muted">Select a user from the list or enter their ID manually</p>
+              <h5 class = "text-light">Make Admin</h5>
+              <p class="text-light">Select a user from the list or enter their ID manually</p>
               
               <div class="mb-3">
                 <label class="form-label">User ID</label>
@@ -355,7 +355,7 @@
               </div>
               
               <button 
-                class="btn btn-primary w-100" 
+                class="btn btn-primary w-100 text-light" 
                 (click)="promoteUser()"
                 [disabled]="isLoading || !userIdToPromote.trim()">
                 <i class="fas fa-spinner fa-spin me-2" *ngIf="isLoading"></i>
@@ -363,7 +363,7 @@
                 Promote to Admin
               </button>
               
-              <div class="alert alert-info mt-3">
+              <div class="alert alert-info mt-3 text-light">
                 <i class="fas fa-info-circle me-2"></i>
                 <strong>Tip:</strong> Click "Make Admin" next to any user in the list to auto-fill their ID.
               </div>
