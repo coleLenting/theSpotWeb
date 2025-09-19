@@ -1,0 +1,56 @@
+<div class="wishlist-container">
+  <div class="container py-5">
+    <h1 class="page-title font-bauhaus">My Wishlist</h1>
+    
+    <div class="row" *ngIf="wishlistMovies.length > 0">
+      <div class="col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let movie of wishlistMovies">
+        <div class="movie-card">
+          <div class="movie-poster-container">
+            <img [src]="movie.poster" [alt]="movie.title" class="movie-poster">
+            <div class="movie-overlay">
+              <button class="btn btn-primary btn-sm" [routerLink]="['/movie', movie.id]">
+                <i class="fas fa-eye me-1"></i>View
+              </button>
+            </div>
+          </div>
+          
+          <div class="movie-info">
+            <h5 class="movie-title font-bricolage">{{ movie.title }}</h5>
+            <p class="movie-year">{{ movie.year }}</p>
+            <p class="movie-genre">{{ movie.genre }}</p>
+            <p class="movie-price">R{{ movie.price }}</p>
+            
+            <div class="movie-actions">
+              <button 
+                *ngIf="!isInCart(movie.id)" 
+                (click)="addToCart(movie)" 
+                class="btn btn-primary btn-sm me-2">
+                <i class="fas fa-cart-plus me-1"></i>Add to Cart
+              </button>
+              <button 
+                *ngIf="isInCart(movie.id)" 
+                (click)="removeFromCart(movie.id)" 
+                class="btn btn-danger btn-sm me-2">
+                <i class="fas fa-cart-arrow-down me-1"></i>Remove from Cart
+              </button>
+              <button 
+                (click)="removeFromWishlist(movie.id)" 
+                class="btn btn-outline-danger btn-sm">
+                <i class="fas fa-heart-broken me-1"></i>Remove
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="empty-wishlist text-center py-5" *ngIf="wishlistMovies.length === 0">
+      <i class="fas fa-heart fa-5x text-muted mb-4"></i>
+      <h3 class="font-bauhaus">Your Wishlist is Empty</h3>
+      <p class="font-bricolage text-muted">Start adding movies to your wishlist to keep track of what you want to watch!</p>
+      <button class="btn btn-primary btn-lg" routerLink="/items">
+        <i class="fas fa-film me-2"></i>Browse Movies
+      </button>
+    </div>
+  </div>
+</div>

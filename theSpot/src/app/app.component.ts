@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit {
   title = 'theSpot';
   cartCount = 0;
+  wishlistCount = 0;
 
   constructor(
     private authService: AuthService,
@@ -22,6 +23,10 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.movieService.cart$.subscribe(cart => {
       this.cartCount = cart.length;
+    });
+    
+    this.movieService.watchlist$.subscribe(wishlist => {
+      this.wishlistCount = wishlist.length;
     });
   }
 

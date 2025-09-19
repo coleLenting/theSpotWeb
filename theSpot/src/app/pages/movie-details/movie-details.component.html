@@ -47,8 +47,11 @@
             <button *ngIf="isInCart()" (click)="removeFromCart()" class="btn btn-danger">
               <i class="fas fa-cart-arrow-down me-2"></i>Remove from Cart
             </button>
-            <button class="btn btn-outline-secondary btn-lg">
+            <button *ngIf="!isInWishlist()" (click)="addToWishlist()" class="btn btn-outline-secondary btn-lg">
               <i class="fas fa-heart me-2"></i>Add to Wishlist
+            </button>
+            <button *ngIf="isInWishlist()" (click)="removeFromWishlist()" class="btn btn-secondary btn-lg">
+              <i class="fas fa-heart-broken me-2"></i>Remove from Wishlist
             </button>
           </div>
         </div>

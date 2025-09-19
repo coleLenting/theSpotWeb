@@ -135,4 +135,8 @@ export class ApiService {
   updateProfile(data: { name?: string; currentPassword?: string; newPassword?: string }): Observable<any> {
     return this.http.put(`${this.baseUrl}/auth/me`, data);
   }
+
+  deleteAccount(): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/auth/me`);
+  }
 }

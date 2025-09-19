@@ -2,13 +2,12 @@
   <div class="container">
     <!-- Brand title -->
     <a class="navbar-brand fw-bold font-bauhaus" routerLink="/home">The Spot</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse w-100" id="navbarNav">
-      <!-- Right-side the nav items -->
-      <ul class="navbar-nav w-100 font-bricolage d-flex"
-        [ngClass]="isLoggedIn() ? 'justify-content-center' : 'justify-content-end'">
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Main navigation items -->
+      <ul class="navbar-nav me-auto font-bricolage" *ngIf="isLoggedIn()">
         <li class="nav-item">
           <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
         </li>
@@ -18,7 +17,11 @@
         <li class="nav-item" *ngIf="isAdmin()">
           <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
         </li>
-        <li class="nav-item" *ngIf="!isLoggedIn()">
+      </ul>
+      
+      <!-- Login link for non-authenticated users -->
+      <ul class="navbar-nav ms-auto font-bricolage" *ngIf="!isLoggedIn()">
+        <li class="nav-item">
           <a class="nav-link" routerLink="/authentication" routerLinkActive="active">Login</a>
         </li>
       </ul>
@@ -29,6 +32,12 @@
           <a class="nav-link cart-icon" routerLink="/cart" routerLinkActive="active">
             <i class="fas fa-shopping-cart"></i>
             <span class="cart-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link wishlist-icon" routerLink="/wishlist" routerLinkActive="active">
+            <i class="fas fa-heart"></i>
+            <span class="wishlist-count" *ngIf="wishlistCount > 0">{{ wishlistCount }}</span>
           </a>
         </li>
         <li class="nav-item">

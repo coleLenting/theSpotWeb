@@ -19,6 +19,7 @@ import { MovieDetailsComponent } from './pages/movie-details/movie-details.compo
 
 //Components
 import { MoviePosterCarouselComponent } from './components/movie-poster-carousel/movie-poster-carousel.component';
+import { WishlistComponent } from './pages/wishlist/wishlist.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MoviePosterCarouselComponent } from './components/movie-poster-carousel
     LandingPageComponent,
     AuthenticationComponent,
     MoviePosterCarouselComponent,
-    MovieDetailsComponent
+    MovieDetailsComponent,
+    WishlistComponent
     
   ],
   imports: [

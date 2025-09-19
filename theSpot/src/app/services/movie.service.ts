@@ -302,4 +302,8 @@ export class MovieService {
   isInCart(movieId: number): boolean {
     return this.cartSubject.value.some(item => item.id === movieId);
   }
+
+  isInWishlist(movieId: number): boolean {
+    return this.watchlistSubject.value.some(item => item.id === movieId);
+  }
 }

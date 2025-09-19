@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MovieService } from '../../services/movie.service';
 import { ApiService } from '../../services/api.service';
@@ -30,7 +31,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private movieService: MovieService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -141,5 +143,24 @@ export class ProfileComponent implements OnInit {
     this.editForm.confirmPassword = '';
     this.errorMessage = '';
     this.successMessage = '';
+  }
+
+  deleteAccount(): void {
+    if (confirm('Are you sure you want to permanently delete your account? This action cannot be undone.')) {
+      this.isLoading = true;
+      this.errorMessage = '';
+      
+      this.apiService.deleteAccount().subscribe({
+        next: () => {
+          alert('Your account has been successfully deleted.');
+          this.authService.logout();
+          this.router.navigate(['/landing']);
+        },
+        error: (error) => {
+          this.errorMessage = error.error?.message || 'Failed to delete account';
+          this.isLoading = false;
+        }
+      });
+    }
   }
 }

@@ -46,6 +46,22 @@ export class MovieDetailsComponent implements OnInit {
     return this.movie ? this.movieService.isInCart(this.movie.id) : false;
   }
 
+  addToWishlist(): void {
+    if (this.movie) {
+      this.movieService.addToWatchlist(this.movie);
+    }
+  }
+
+  removeFromWishlist(): void {
+    if (this.movie) {
+      this.movieService.removeFromWatchlist(this.movie.id);
+    }
+  }
+
+  isInWishlist(): boolean {
+    return this.movie ? this.movieService.isInWishlist(this.movie.id) : false;
+  }
+
   goBack(): void {
     this.location.back();
   }

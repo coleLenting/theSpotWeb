@@ -5,6 +5,7 @@ import { AuthenticationComponent } from './pages/authentication/authentication.c
 import { HomeComponent } from './pages/home/home.component';
 import { ItemListComponent } from './pages/item-list/item-list.component';
 import { CartComponent } from './pages/cart/cart.component';
+import { WishlistComponent } from './pages/wishlist/wishlist.component';
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { MovieDetailsComponent } from './pages/movie-details/movie-details.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'items', component: ItemListComponent, canActivate: [AuthGuard] },
   { path: 'movie/:id', component: MovieDetailsComponent, canActivate: [AuthGuard] },
   { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
+  { path: 'wishlist', component: WishlistComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminPanelComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/landing' }
