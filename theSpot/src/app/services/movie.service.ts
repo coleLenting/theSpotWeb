@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService, Movie as ApiMovie } from './api.service';
+import { AuthService } from './auth.service';
 
 export interface Movie {
   id: number;
@@ -162,7 +163,7 @@ export class MovieService {
     }
   ];
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private authService: AuthService) {
     // Load movies from backend or use dummy data
     if (this.useBackend) {
       this.loadMoviesFromBackend();
@@ -170,15 +171,54 @@ export class MovieService {
       this.moviesSubject.next(this.movies);
     }
     
-    // Load cart and watchlist from localStorage
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-      this.cartSubject.next(JSON.parse(savedCart));
-    }
+    // Load user-specific cart and watchlist when user changes
+    this.authService.user$.subscribe(user => {
+      this.loadUserData(user);
+    });
     
-    const savedWatchlist = localStorage.getItem('watchlist');
-    if (savedWatchlist) {
-      this.watchlistSubject.next(JSON.parse(savedWatchlist));
+    // Load initial user data
+    this.loadUserData(this.authService.getUser());
+  }
+
+  private loadUserData(user: any): void {
+    if (user && user.id) {
+      // Load user-specific cart and watchlist
+      const userCartKey = `cart_${user.id}`;
+      const userWatchlistKey = `watchlist_${user.id}`;
+      
+      const savedCart = localStorage.getItem(userCartKey);
+      if (savedCart) {
+        this.cartSubject.next(JSON.parse(savedCart));
+      } else {
+        this.cartSubject.next([]);
+      }
+      
+      const savedWatchlist = localStorage.getItem(userWatchlistKey);
+      if (savedWatchlist) {
+        this.watchlistSubject.next(JSON.parse(savedWatchlist));
+      } else {
+        this.watchlistSubject.next([]);
+      }
+    } else {
+      // Clear cart and watchlist when no user is logged in
+      this.cartSubject.next([]);
+      this.watchlistSubject.next([]);
+    }
+  }
+
+  private saveUserCart(): void {
+    const user = this.authService.getUser();
+    if (user && user.id) {
+      const userCartKey = `cart_${user.id}`;
+      localStorage.setItem(userCartKey, JSON.stringify(this.cartSubject.value));
+    }
+  }
+
+  private saveUserWatchlist(): void {
+    const user = this.authService.getUser();
+    if (user && user.id) {
+      const userWatchlistKey = `watchlist_${user.id}`;
+      localStorage.setItem(userWatchlistKey, JSON.stringify(this.watchlistSubject.value));
     }
   }
 
@@ -260,7 +300,7 @@ export class MovieService {
     if (!currentCart.find(item => item.id === movie.id)) {
       const updatedCart = [...currentCart, movie];
       this.cartSubject.next(updatedCart);
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      this.saveUserCart();
     }
   }
 
@@ -268,7 +308,7 @@ export class MovieService {
     const currentCart = this.cartSubject.value;
     const updatedCart = currentCart.filter(item => item.id !== movieId);
     this.cartSubject.next(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    this.saveUserCart();
     this.refreshData();
   }
 
@@ -277,7 +317,7 @@ export class MovieService {
     if (!currentWatchlist.find(item => item.id === movie.id)) {
       const updatedWatchlist = [...currentWatchlist, movie];
       this.watchlistSubject.next(updatedWatchlist);
-      localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist));
+      this.saveUserWatchlist();
       this.refreshData();
     }
   }
@@ -286,7 +326,7 @@ export class MovieService {
     const currentWatchlist = this.watchlistSubject.value;
     const updatedWatchlist = currentWatchlist.filter(item => item.id !== movieId);
     this.watchlistSubject.next(updatedWatchlist);
-    localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist));
+    this.saveUserWatchlist();
     this.refreshData();
   }
 
@@ -296,7 +336,11 @@ export class MovieService {
 
   clearCart(): void {
     this.cartSubject.next([]);
-    localStorage.removeItem('cart');
+    const user = this.authService.getUser();
+    if (user && user.id) {
+      const userCartKey = `cart_${user.id}`;
+      localStorage.removeItem(userCartKey);
+    }
   }
 
   isInCart(movieId: number): boolean {
